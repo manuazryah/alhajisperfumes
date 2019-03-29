@@ -1,0 +1,1 @@
+<img src="<?= Yii::$app->homeUrl . 'images/no-result.jpg' ?>" height="100%" alt="no-result"/>
