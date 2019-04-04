@@ -234,6 +234,11 @@ class CartController extends \yii\web\Controller {
 
     public function actionProceed() {
         if (isset(Yii::$app->user->identity->id)) {
+            $condition = Cart::usercheck();
+            $cart_items = Cart::find()->where($condition)->all();
+            if (!empty($cart_items)) {
+                $cart_items = $this->CheckProductAvailability($cart_items);
+            }
             $cart = Cart::find()->where(['user_id' => Yii::$app->user->identity->id])->all();
             if (!empty($cart)) {
                 $order_id = Cart::checkout();

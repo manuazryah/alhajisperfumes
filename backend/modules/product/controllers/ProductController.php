@@ -81,6 +81,9 @@ class ProductController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $file11 = UploadedFile::getInstances($model, 'profile');
             $file12 = UploadedFile::getInstances($model, 'other_image');
+            if (isset($model->type) && $model->type != '') {
+                $model->type = implode(',', $model->type);
+            }
             if (!empty($file11))
                 $model->profile = $file11[0]->extension;
             if ($model->validate()) {
@@ -105,7 +108,7 @@ class ProductController extends Controller {
                 if (!empty($model->offer_price) && isset($model->offer_price)) {
                     $percentage = round(100 - (($model->offer_price / $model->price) * 100));
                 }
-                
+
                 if ($model->save()) {
                     if ($file11) {
                         $this->image_clear($model);
@@ -144,6 +147,9 @@ class ProductController extends Controller {
             $ai = '';
             $file11 = UploadedFile::getInstances($model, 'profile');
             $file12 = UploadedFile::getInstances($model, 'other_image');
+            if (isset($model->type) && $model->type != '') {
+                $model->type = implode(',', $model->type);
+            }
 //            $model->item_ean = date(Ymdhis);
             if ($file11) {
                 $model->profile = $file11[0]->extension;
